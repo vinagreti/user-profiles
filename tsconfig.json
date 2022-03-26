@@ -21,7 +21,42 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@env/*": [
+        "./src/environments/*"
+      ],
+      "@animations/*": [
+        "./src/app/animations/*"
+      ],
+      "@components/*": [
+        "./src/app/components/*"
+      ],
+      "@i18n/*": [
+        "./src/app/i18n/*"
+      ],
+      "@models/*": [
+        "./src/app/models/*"
+      ],
+      "@client-helpers/*": [
+        "./src/app/client-helpers/*"
+      ],
+      "@universal-helpers/*": [
+        "./universal-helpers/*"
+      ],
+      "@pipes/*": [
+        "./src/app/pipes/*"
+      ],
+      "@services/*": [
+        "./src/app/services/*"
+      ],
+      "@pages/*": [
+        "./src/app/pages/*"
+      ],
+      "@functions/*": [
+        "./functions/src/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

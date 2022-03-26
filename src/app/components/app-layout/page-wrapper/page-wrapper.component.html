@@ -1,0 +1,18 @@
+<div class="flex-column">
+  <div class="flex-row flex-align-center app-page-wrapper-header">
+    <div>TITLE</div>
+    <div class="flex-grow"></div>
+    <div>
+      <ng-content select="menu"></ng-content>
+    </div>
+  </div>
+  <div class="flex-grow flex-row">
+    <div class="app-page-wrapper-left-menu">
+      <ng-content select="nav"></ng-content>
+    </div>
+
+    <div class="flex-grow app-page-wrapper-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
