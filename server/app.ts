@@ -1,31 +1,22 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import { Express, Request, Response } from 'express';
-import * as path from 'path'; // < -- add this
-import { API_DB } from './db';
-
-const clientPath = '../../public';
+import { Express } from 'express';
+import { default as authApi } from './src/auth';
+import { default as userApi } from './src/users';
 
 export default function createApp(): Express {
   const app = express();
   app.use(cors());
-  const clientDir = path.join(__dirname, clientPath); // <-- add this
-  app.use(express.static(clientDir)); // <-- and add this
+  app.use(express.json());
 
-  app.get('/api/:name', async (req: Request, res: Response) => {
-    const name = req.params['name'];
-    const greeting = { greeting: `Hello, ${name}` };
-    res.send(greeting);
+  // API ENABLED ROUTES
+  app.use((req, res, next) => {
+    console.log('AUTHENTICATED');
+    next();
   });
 
-  app.get('/user', async (req: Request, res: Response) => {
-    res.send(API_DB.users[1]);
-  });
-
-  // handle everything else
-  app.get('*', function (request, response) {
-    response.sendFile(path.resolve(__dirname, `${clientPath}/index.html`));
-  });
+  app.use('/auth', authApi);
+  app.use('/users', userApi);
 
   return app;
 }

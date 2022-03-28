@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User, USER_LEVEL } from '@models/user';
+import { User } from '@models/user';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 
 @Injectable({
@@ -15,8 +15,7 @@ export class AuthService {
     const user: User = {
       id: 'string',
       name: 'string',
-      age: 'string',
-      level: USER_LEVEL.ADMIN,
+      email: 'string',
     };
     this.user$.next(user);
     return user;
@@ -28,7 +27,7 @@ export class AuthService {
   }
 
   private async detectInitialAuthStatus() {
-    const call = this.http.get<User>('//localhost:3000/user');
+    const call = this.http.get<User>('//localhost:3000/users/current');
     const user = await lastValueFrom<User>(call);
     this.user$.next(user);
     return user;

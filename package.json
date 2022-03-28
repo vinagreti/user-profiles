@@ -10,7 +10,9 @@
     "test": "ng test",
     "clean": "rm -rf ./dist/api && rm -rf ./dist/public/",
     "cp:www": "mkdir -p ./dist/api/bin && cp ./server/bin/www ./dist/api/bin/",
-    "dev": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"cd ./dist/api && nodemon -r ./bin/www --watch\" \"ng build --watch\""
+    "back": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"nodemon -q ./dist/api/bin/www --watch\"",
+    "front": "npm run start",
+    "mono": "concurrently -k  \"npm run front\" \"npm run cp:www && npm run back\" "
   },
   "private": true,
   "dependencies": {
@@ -24,6 +26,7 @@
     "@angular/router": "~13.2.0",
     "concurrently": "^7.0.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.3",
     "nodemon": "^2.0.15",
     "rxjs": "~7.5.0",

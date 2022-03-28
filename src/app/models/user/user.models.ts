@@ -1,8 +1,7 @@
 export interface User {
   id: string;
   name: string;
-  age: string;
-  level: USER_LEVEL;
+  email: string;
 }
 
 export enum USER_LEVEL {
