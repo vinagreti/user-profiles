@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { AuthResponse } from '@models/auth';
 import { User } from '@models/user';
-import { BehaviorSubject, catchError, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, of, shareReplay, tap } from 'rxjs';
 import { PassportApiServiceOptions } from './passport-api.service.models';
 
 const AUTH_TOKEN_KEY = '42';
@@ -31,14 +31,20 @@ export class PassportApiService<CT = any> {
   get<T = CT>({ path }: PassportApiServiceOptions) {
     const headers = new HttpHeaders({ Authorization: this.token! });
     const url = `${environment.apiUrl}${path}`;
-    return this.http.get<T>(url, { headers });
+    return this.http.get<T>(url, { headers }).pipe(shareReplay());
+  }
+
+  post<T = CT>({ path, payload }: PassportApiServiceOptions) {
+    const url = `${environment.apiUrl}${path}`;
+    return this.http.post<T>(url, payload).pipe(shareReplay());
   }
 
   login(email: string, password: string) {
-    const url = `${environment.apiUrl}${AUTH_PATHS.login}`;
-    return this.http
-      .post<AuthResponse>(url, { email, password })
-      .pipe(tap((authData) => this.handleLoginSuccess(authData)));
+    const path = AUTH_PATHS.login;
+    const payload = { email, password };
+    return this.post<AuthResponse>({ path, payload }).pipe(
+      tap((authData) => this.handleLoginSuccess(authData))
+    );
   }
 
   logout() {

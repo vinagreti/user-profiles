@@ -16,7 +16,7 @@ export default function createApp(): Express {
   });
 
   app.use('/auth', authApi);
-  app.use('/users', userApi);
+  app.use('/user', userApi);
 
   return app;
 }
