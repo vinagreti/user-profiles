@@ -10,9 +10,11 @@
     "test": "ng test",
     "clean": "rm -rf ./dist/api && rm -rf ./dist/public/",
     "cp:www": "mkdir -p ./dist/api/bin && cp ./server/bin/www ./dist/api/bin/",
-    "back": "concurrently -k \"tsc -p ./server/tsconfig.api.json -w\" \"nodemon -q ./dist/api/bin/www --watch\"",
+    "api:build:watch": "tsc -p ./server/tsconfig.api.json --watch",
+    "api:run:watch": "nodemon -q ./dist/api/bin/www --watch",
+    "api:watch": "concurrently -k \"npm run api:build:watch\" \"npm run api:run:watch\"",
     "front": "npm run start",
-    "mono": "concurrently -k  \"npm run front\" \"npm run cp:www && npm run back\" "
+    "mono": "concurrently -k  \"npm run front\" \"npm run cp:www && npm run api:watch\""
   },
   "private": true,
   "dependencies": {
@@ -47,6 +49,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "prettier": "^2.6.1",
+    "tscpaths": "^0.0.9",
     "typescript": "~4.5.2"
   }
 }

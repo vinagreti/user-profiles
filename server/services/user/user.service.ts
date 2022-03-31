@@ -1,8 +1,7 @@
 import * as crypto from 'crypto';
-import { Request } from 'express';
-import { User, USER_LEVEL } from './../../../src/app/models/user';
+import { User, USER_LEVEL } from './../../../universal/models/user';
 import { API_DB } from './../../db';
-import { authService } from './../auth';
+import { authService } from './../../services/auth';
 
 const usersDb = API_DB.users;
 
@@ -19,11 +18,6 @@ class UserService {
     };
     usersDb[id] = user;
     return user;
-  }
-
-  current(req: Request) {
-    const authUser = authService.getAuthUserByToken(req);
-    return authUser ? usersDb[authUser.id] : undefined;
   }
 }
 

@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { User, USER_LEVEL } from './../../../src/app/models/user';
+import { AuthMetadata, AuthResponse } from './../../../universal/models/auth';
+import { User, USER_LEVEL } from './../../../universal/models/user';
 import { API_DB } from './../../db';
-import { AuthMetadata } from './auth.service.models';
 
 const crypto = require('crypto');
 
@@ -12,15 +12,25 @@ const users = API_DB.users;
 class AuthService {
   user?: User;
 
+  current(req: Request) {
+    const authUser = authService.getAuthUserByToken(req);
+    return authUser ? users[authUser.id] : undefined;
+  }
+
   create(id: string, password: string, level: USER_LEVEL) {
     auth[id] = {
       id,
       password: this.getToken(password),
-      level,
     };
+
+    users[id].level = level;
   }
 
-  login(email: string, password: string, authMetadata: AuthMetadata) {
+  login(
+    email: string,
+    password: string,
+    authMetadata: AuthMetadata
+  ): AuthResponse | false {
     const userIdByToken = Object.keys(users).find(
       (key) => users[key].email === email
     );
@@ -30,7 +40,10 @@ class AuthService {
       if (passwordMatch) {
         const authTokens = this.getAuthTokens(authMetadata);
         userAuthData.token = authTokens.privateToken;
-        return authTokens.publicToken;
+        return {
+          token: authTokens.publicToken,
+          user: users[userIdByToken],
+        };
       } else {
         return false;
       }
@@ -71,6 +84,7 @@ class AuthService {
     authMetadata: AuthMetadata,
     publicToken: string = this.getRandomToken()
   ) {
+    console.log('user agent', authMetadata.userAgent);
     const agentToken = this.getToken(authMetadata.userAgent);
     const privateToken = `${publicToken}${agentToken}`;
     return {

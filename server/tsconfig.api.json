@@ -11,6 +11,10 @@
       "node"
     ],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+  },
+  "include": [
+    "./*",
+    "./../universal"
+  ]
 }

@@ -12,8 +12,9 @@ import { AuthService } from '@services/auth/auth.service';
 export class LoginPageComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-  async login() {
-    await this.authService.login();
-    this.router.navigate([APP_ROUTES.privateOnly.dashboard]);
+  login() {
+    this.authService.login('admin@admin.com', 'admin').subscribe((res) => {
+      this.router.navigate([APP_ROUTES.privateOnly.dashboard]);
+    });
   }
 }

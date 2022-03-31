@@ -4,14 +4,23 @@ import { authService } from './../services/auth';
 
 const userRoutes = express.Router();
 
+userRoutes.get('/current', (req, res) => {
+  const user = authService.current(req);
+  if (user) {
+    res.send(user);
+  } else {
+    res.status(401).send();
+  }
+});
+
 userRoutes.post('/login', (req: Request, res) => {
-  const user = req.body['user'];
-  const password = req.body['pass'];
+  const email = req.body['email'];
+  const password = req.body['password'];
   const authMetadata = {
     userAgent: req.get('User-Agent')!,
   };
-  if (user && password) {
-    const loggedUser = authService.login(user, password, authMetadata);
+  if (email && password) {
+    const loggedUser = authService.login(email, password, authMetadata);
 
     if (loggedUser) {
       res.status(201).send(loggedUser);

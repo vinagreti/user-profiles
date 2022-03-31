@@ -9,15 +9,6 @@ userRoutes.use((req, res, next) => {
   next();
 });
 
-userRoutes.get('/current', (req, res) => {
-  const user = userService.current(req);
-  if (user) {
-    res.send(user);
-  } else {
-    res.status(401).send();
-  }
-});
-
 userRoutes.get('/', (req, res) => {
   res.send(Object.values(API_DB.users));
 });

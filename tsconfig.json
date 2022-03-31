@@ -36,7 +36,10 @@
         "./src/app/i18n/*"
       ],
       "@models/*": [
-        "./src/app/models/*"
+        "./universal/models/*"
+      ],
+      "@server/*": [
+        "./server/*"
       ],
       "@client-helpers/*": [
         "./src/app/client-helpers/*"

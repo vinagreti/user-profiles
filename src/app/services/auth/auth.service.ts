@@ -1,40 +1,31 @@
 import { Injectable } from '@angular/core';
 import { User } from '@models/user';
 import { PassportApiService } from '@services/passport-api/passport-api.service';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User | undefined>(undefined);
+  user$!: Observable<User | undefined>;
 
-  constructor(private passportApi: PassportApiService) {}
+  constructor(private passportApi: PassportApiService) {
+    this.connectToUserStream();
+  }
 
-  async login() {
-    const user: User = {
-      id: 'string',
-      name: 'string',
-      email: 'string',
-    };
-    this.user$.next(user);
-    return user;
+  login(email: string, password: string) {
+    return this.passportApi.login(email, password);
   }
 
   async logout() {
-    this.user$.next(undefined);
-    return true;
+    return this.passportApi.logout();
   }
 
-  private async detectInitialAuthStatus() {
-    const call = this.passportApi.get<User>({
-      url: '//localhost:3000/users/current',
-    });
-    const user = await lastValueFrom<User>(call).then(
-      (a) => a,
-      () => undefined
-    );
-    this.user$.next(user);
-    return user;
+  private connectToUserStream() {
+    this.user$ = this.passportApi.user$;
+  }
+
+  private detectInitialAuthStatus() {
+    return lastValueFrom(this.passportApi.refreshUser());
   }
 }

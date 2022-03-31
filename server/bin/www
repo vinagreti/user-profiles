@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const app = require('../server/app').default();
+const app = require('./../server/app').default();
 const debug = require('debug')('NameApp:server');
 const http = require('http');
 /**
