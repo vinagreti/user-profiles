@@ -1,8 +1,8 @@
 import * as crypto from 'crypto';
 import { Request } from 'express';
-import { User, USER_LEVEL } from './../../src/app/models/user';
-import { API_DB } from './../db';
-import { authService } from './auth.service';
+import { User, USER_LEVEL } from './../../../src/app/models/user';
+import { API_DB } from './../../db';
+import { authService } from './../auth';
 
 const usersDb = API_DB.users;
 

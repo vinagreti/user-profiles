@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { API_DB } from './../db';
-import { userService } from './../services/user.service';
+import { userService } from './../services/user';
 
 const userRoutes = express.Router();
 
@@ -27,7 +27,6 @@ userRoutes.post('/', (req, res) => {
   const email = req.body['email'];
   const password = req.body['password'];
   const level = req.body['level'];
-  console.log('------------ req.body', req.body);
   const newUser = userService.create(name, email, password, level);
   if (newUser) {
     res.send(newUser);
@@ -41,4 +40,5 @@ userRoutes.get('/:id', (req, res) => {
   const user = API_DB.users[userId];
   res.send(user);
 });
+
 export default userRoutes;

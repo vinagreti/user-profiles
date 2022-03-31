@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { PassportApiModule } from '@services/passport-api/passport-api.module';
 import { AuthService } from './auth.service';
 
 function authAppInitializer(auth: AuthService) {
@@ -11,7 +11,7 @@ function authAppInitializer(auth: AuthService) {
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, PassportApiModule],
   providers: [
     AuthService,
     {

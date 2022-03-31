@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '@models/user';
+import { PassportApiService } from '@services/passport-api/passport-api.service';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { BehaviorSubject, lastValueFrom } from 'rxjs';
 export class AuthService {
   user$ = new BehaviorSubject<User | undefined>(undefined);
 
-  constructor(private http: HttpClient) {}
+  constructor(private passportApi: PassportApiService) {}
 
   async login() {
     const user: User = {
@@ -27,8 +27,13 @@ export class AuthService {
   }
 
   private async detectInitialAuthStatus() {
-    const call = this.http.get<User>('//localhost:3000/users/current');
-    const user = await lastValueFrom<User>(call);
+    const call = this.passportApi.get<User>({
+      url: '//localhost:3000/users/current',
+    });
+    const user = await lastValueFrom<User>(call).then(
+      (a) => a,
+      () => undefined
+    );
     this.user$.next(user);
     return user;
   }

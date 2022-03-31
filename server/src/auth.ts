@@ -1,15 +1,18 @@
 import * as express from 'express';
 import { Request } from 'express';
-import { authService } from './../services/auth.service';
+import { authService } from './../services/auth';
 
 const userRoutes = express.Router();
 
 userRoutes.post('/login', (req: Request, res) => {
   const user = req.body['user'];
-  const pass = req.body['pass'];
+  const password = req.body['pass'];
+  const authMetadata = {
+    userAgent: req.get('User-Agent')!,
+  };
+  if (user && password) {
+    const loggedUser = authService.login(user, password, authMetadata);
 
-  if (user && pass) {
-    const loggedUser = authService.login(user, pass);
     if (loggedUser) {
       res.status(201).send(loggedUser);
     } else {
@@ -20,7 +23,7 @@ userRoutes.post('/login', (req: Request, res) => {
   } else {
     res
       .status(401)
-      .send({ error: 401, message: 'Invalid username or password' });
+      .send({ error: 401, message: 'Username or password not provided' });
   }
 });
 
