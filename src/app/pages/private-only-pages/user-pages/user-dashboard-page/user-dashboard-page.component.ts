@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User, USER_LEVEL } from '@models/user';
-import { PermissionService } from '@services/permission/permission.service';
+import { APP_ROUTES } from '@pages/routes';
+import { PermissionService } from '@services/permission';
 import { UserService } from '@services/user/user.service';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { APP_ROUTES } from './../../../routes';
 
 @Component({
   selector: 'app-user-dashboard-page',

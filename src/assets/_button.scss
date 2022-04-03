@@ -1,20 +1,7 @@
-:root {
-  --primary-color: black;
-  --primary-color-contrast: white;
-
-  --accent-color: white;
-  --accent-color-contrast: black;
-
-  --warn-color: red;
-  --warn-color-contrast: white;
-}
-
-a {
-  text-decoration: none;
-}
-
 button,
-a {
+a.button,
+a.button:visited,
+a.button:active {
   border: none;
   border-radius: 4px;
   background-color: transparent;
@@ -23,34 +10,34 @@ a {
   padding: 8px;
 
   &[color="primary"] {
-    color: var(--primary-color);
-    background-color: var(--primary-color-contrast);
+    color: var(--app-color-primary);
+    background-color: var(--app-color-primary-contrast);
     &:hover {
-      background-color: var(--primary-color);
-      color: var(--primary-color-contrast);
+      background-color: var(--app-color-primary);
+      color: var(--app-color-primary-contrast);
     }
   }
   &[color="accent"] {
-    color: var(--accent-color);
-    background-color: var(--accent-color-contrast);
+    color: var(--app-color-accent);
+    background-color: var(--app-color-accent-contrast);
     &:hover {
-      background-color: var(--accent-color);
-      color: var(--accent-color-contrast);
+      background-color: var(--app-color-accent);
+      color: var(--app-color-accent-contrast);
     }
   }
   &[color="warn"] {
-    color: var(--warn-color);
-    background-color: var(--warn-color-contrast);
+    color: var(--app-color-warn);
+    background-color: var(--app-color-warn-contrast);
     &:hover {
-      background-color: var(--warn-color);
-      color: var(--warn-color-contrast);
+      background-color: var(--app-color-warn);
+      color: var(--app-color-warn-contrast);
     }
   }
 
   &:disabled,
   &:disabled:hover {
     background-color: transparent;
-    color: grey;
+    color: var(--app-color-grey);
     cursor: initial;
   }
 }

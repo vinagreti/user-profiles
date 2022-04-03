@@ -20,6 +20,12 @@ $sizes: 0px, 2px, 4px, 8px, 12px, 16px, 24px, 32px;
   overflow: auto;
 }
 
+.flex-grow-equal {
+  flex-grow: 1;
+  overflow: auto;
+  flex-basis: 0;
+}
+
 .flex-column {
   flex-direction: column;
   height: 100%;

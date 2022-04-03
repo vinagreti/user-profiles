@@ -1,3 +1,14 @@
-<app-private-only-pages-wrapper>
+<app-page-wrapper>
+  <menu>
+    <button color="accent" class="button" (click)="logout()">Logout</button>
+  </menu>
+  <nav>
+    <a
+      [routerLink]="[APP_ROUTES.privateOnly.user.dashboard]"
+      color="accent"
+      class="button"
+      >Users</a
+    >
+  </nav>
   <router-outlet></router-outlet>
-</app-private-only-pages-wrapper>
+</app-page-wrapper>

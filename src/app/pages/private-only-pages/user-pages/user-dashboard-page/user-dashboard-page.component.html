@@ -8,21 +8,26 @@
         >
       </h1>
       <div>
-        <button (click)="onAddNewUserClicked()" color="primary">
+        <a
+          [routerLink]="[APP_ROUTES.privateOnly.user.new]"
+          (click)="onAddNewUserClicked()"
+          color="primary"
+        >
           + New User
-        </button>
+        </a>
       </div>
     </div>
-    <div class="flex-column flex-gap-8px">
+    <div class="flex-column">
       <ng-container *ngFor="let user of users; trackBy: trackByUser">
-        <div [ngClass]="{ me: user.id === currentUser.id }" class="flex-row">
-          <div class="flex-grow">
-            <a
-              [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
-              >{{ user.name }}</a
-            >
+        <div
+          [ngClass]="{ me: user.id === currentUser.id }"
+          class="flex-row row flex-gap-8px click"
+          [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
+        >
+          <div class="flex-grow-equal">
+            <a color="accent">{{ user.name }}</a>
           </div>
-          <div class="flex-grow">
+          <div class="flex-grow-equal">
             {{ user.email }}
           </div>
           <div>
@@ -33,6 +38,7 @@
               [value]="user.level"
               [disabled]="user.id === currentUser.id"
               (change)="onLevelChanged(user, $any($event.target).value)"
+              (click)="$event.stopPropagation()"
             >
               <option
                 *ngFor="let userLevelOptionValue of USER_LEVELS"

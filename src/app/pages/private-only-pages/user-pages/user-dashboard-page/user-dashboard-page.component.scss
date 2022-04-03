@@ -1,3 +1,11 @@
 .me {
-  background-color: goldenrod;
+  background-color: var(--app-color-accent);
+}
+
+.row {
+  padding: 8px;
+
+  &:hover {
+    background-color: var(--app-color-grey-light);
+  }
 }

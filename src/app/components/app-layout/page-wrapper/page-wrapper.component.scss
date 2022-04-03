@@ -1,6 +1,10 @@
+:host {
+  --default-padding: 8px;
+}
+
 .app-page-wrapper-header {
   height: 40px;
-  padding: 8px;
+  padding: var(--default-padding);
   background-color: black;
   color: white;
   a {
@@ -9,12 +13,17 @@
 }
 
 .app-page-wrapper-content {
-  padding: 8px;
+  padding: var(--default-padding);
 }
 
 .app-page-wrapper-left-menu {
+  padding: var(--default-padding);
   background-color: black;
   color: white;
+
+  border-top: 2px solid violet;
+  box-shadow: violet 1px 1px 1px 1px;
+
   a {
     color: white;
   }
