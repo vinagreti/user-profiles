@@ -3,6 +3,7 @@ import { User, USER_LEVEL } from '@models/user';
 import { PermissionService } from '@services/permission/permission.service';
 import { UserService } from '@services/user/user.service';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { APP_ROUTES } from './../../../routes';
 
 @Component({
   selector: 'app-user-dashboard-page',
@@ -16,6 +17,8 @@ export class UserDashboardPageComponent implements OnInit {
   users$!: Observable<User[]>;
 
   currentUser$!: Observable<User | undefined>;
+
+  APP_ROUTES = APP_ROUTES;
 
   USER_LEVEL = USER_LEVEL;
 

@@ -17,7 +17,10 @@
       <ng-container *ngFor="let user of users; trackBy: trackByUser">
         <div [ngClass]="{ me: user.id === currentUser.id }" class="flex-row">
           <div class="flex-grow">
-            {{ user.name }}
+            <a
+              [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
+              >{{ user.name }}</a
+            >
           </div>
           <div class="flex-grow">
             {{ user.email }}

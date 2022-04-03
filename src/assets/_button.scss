@@ -46,4 +46,11 @@ a {
       color: var(--warn-color-contrast);
     }
   }
+
+  &:disabled,
+  &:disabled:hover {
+    background-color: transparent;
+    color: grey;
+    cursor: initial;
+  }
 }

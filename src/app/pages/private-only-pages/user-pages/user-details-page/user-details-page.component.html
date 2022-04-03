@@ -1,0 +1,34 @@
+<ng-container *ngIf="user$ | async as user">
+  <h1>{{ user.name }}</h1>
+
+  <div>
+    <div>
+      <label for="name">Name: </label> <span name="name">{{ user.name }}</span>
+    </div>
+    <div>
+      <label for="email">E-mail: </label>
+      <span name="email">{{ user.email }}</span>
+    </div>
+    <div>
+      <label for="level">Level: </label>
+      <span name="level">
+        <select
+          *ngIf="(currentUser$ | async)?.level === USER_LEVEL.ADMIN"
+          name="user-{{ user.id }}-level-selector"
+          attr.aria-label="user {{ user.id }} level selector"
+          [value]="user.level"
+          [disabled]="user.id === (currentUser$ | async)?.id"
+          (change)="onLevelChanged(user, $any($event.target).value)"
+        >
+          <option
+            *ngFor="let userLevelOptionValue of USER_LEVELS"
+            [value]="userLevelOptionValue"
+            [selected]="user.level == userLevelOptionValue"
+          >
+            {{ userLevelOptionValue }}
+          </option>
+        </select>
+      </span>
+    </div>
+  </div>
+</ng-container>

@@ -27,6 +27,11 @@ export class UserService {
     return this.api.get<User[]>({ path: API_URL });
   }
 
+  get(userId: string) {
+    const path = `${API_URL}/${userId}`;
+    return this.api.get<User>({ path });
+  }
+
   private connectToCurrentUserStream() {
     this.current$ = this.api.user$;
   }

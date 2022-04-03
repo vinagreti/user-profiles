@@ -1,1 +1,17 @@
-<p>user-add-page works!</p>
+<div class="flex-column flex-gap-16px">
+  <div>
+    <h1>Add new User</h1>
+
+    <app-user-form [newUser]="newUser" #userForm></app-user-form>
+  </div>
+
+  <div>
+    <button
+      color="primary"
+      [disabled]="!(userForm.valid$ | async)"
+      (click)="addUser(newUser)"
+    >
+      save
+    </button>
+  </div>
+</div>
