@@ -10,10 +10,19 @@ import { AuthService } from '@services/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent {
+  loginData = {
+    email: '',
+    password: '',
+  };
+
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    this.authService.login('admin@admin.com', 'admin').subscribe((res) => {
+  onFormSubmitted(email: string, password: string) {
+    this.login(email, password);
+  }
+
+  private login(email: string, password: string) {
+    this.authService.login(email, password).subscribe((res) => {
       this.router.navigate([APP_ROUTES.privateOnly.user.dashboard]);
     });
   }
