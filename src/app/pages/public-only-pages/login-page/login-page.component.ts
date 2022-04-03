@@ -14,7 +14,7 @@ export class LoginPageComponent {
 
   login() {
     this.authService.login('admin@admin.com', 'admin').subscribe((res) => {
-      this.router.navigate([APP_ROUTES.privateOnly.dashboard]);
+      this.router.navigate([APP_ROUTES.privateOnly.user.dashboard]);
     });
   }
 }

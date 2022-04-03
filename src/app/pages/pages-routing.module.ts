@@ -4,6 +4,7 @@ import { PrivateOnlyGuardGuard, PublicOnlyGuardGuard } from '@services/guards';
 import { APP_ROUTES } from './routes';
 
 const routes: Routes = [
+  { path: '', redirectTo: APP_ROUTES.publicOnly.login, pathMatch: 'full' },
   {
     path: '',
     loadChildren: () =>
@@ -20,7 +21,13 @@ const routes: Routes = [
       ),
     canActivate: [PublicOnlyGuardGuard],
   },
-  { path: '/', redirectTo: APP_ROUTES.publicOnly.login, pathMatch: 'full' },
+  {
+    path: '**',
+    loadChildren: () =>
+      import('./public-pages/not-found-page/not-found-page.module').then(
+        (m) => m.NotFoundPageModule
+      ),
+  },
 ];
 
 @NgModule({

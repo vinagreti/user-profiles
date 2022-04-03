@@ -8,10 +8,10 @@ const routes: Routes = [
     component: PrivateOnlyPagesComponent,
     children: [
       {
-        path: 'dashboard',
+        path: 'users',
         loadChildren: () =>
-          import('./user-dashboard-page/user-dashboard-page.module').then(
-            (m) => m.UserDashboardPageModule
+          import('./user-pages/user-pages.module').then(
+            (m) => m.UserPagesModule
           ),
       },
     ],
