@@ -49,9 +49,8 @@ export class PassportApiService<CT = any> {
   }
 
   logout() {
-    const url = `${environment.apiUrl}${AUTH_PATHS.logout}`;
-    this.persistAuthState(undefined);
-    return this.http.get(url);
+    const path = AUTH_PATHS.logout;
+    return this.get({ path }).pipe(tap(() => this.persistAuthState(undefined)));
   }
 
   refreshUser() {

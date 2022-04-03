@@ -17,23 +17,21 @@
             {{ user.email }}
           </div>
           <div>
-            <button>
-              <select
-                name="user-{{ user.id }}-level-selector"
-                attr.aria-label="user {{ user.id }} level selector"
-                [value]="user.level"
-                [disabled]="user.id === currentUser.id"
-                (change)="onLevelChanged(user, $any($event.target).value)"
+            <select
+              name="user-{{ user.id }}-level-selector"
+              attr.aria-label="user {{ user.id }} level selector"
+              [value]="user.level"
+              [disabled]="user.id === currentUser.id"
+              (change)="onLevelChanged(user, $any($event.target).value)"
+            >
+              <option
+                *ngFor="let level of USER_LEVEL"
+                [value]="level"
+                [selected]="level === user.level"
               >
-                <option
-                  *ngFor="let level of USER_LEVEL"
-                  [value]="level"
-                  [selected]="level === user.level"
-                >
-                  {{ level }}
-                </option>
-              </select>
-            </button>
+                {{ level }}
+              </option>
+            </select>
           </div>
         </div>
       </ng-container>

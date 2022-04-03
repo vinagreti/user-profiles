@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@models/user';
 import { PassportApiService } from '@services/passport-api/passport-api.service';
-import { lastValueFrom, Observable } from 'rxjs';
+import { from, lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +17,9 @@ export class AuthService {
     return this.passportApi.login(email, password);
   }
 
-  async logout() {
-    return this.passportApi.logout();
+  logout() {
+    this.passportApi.logout().subscribe((a) => console.log('a', a));
+    return from(this.passportApi.logout());
   }
 
   private connectToUserStream() {
