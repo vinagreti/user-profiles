@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 
 const API_URL = '/user';
 
+export interface CreateUserPayload extends Omit<User, 'id'> {
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +17,10 @@ export class UserService {
 
   constructor(private api: PassportApiService) {
     this.connectToCurrentUserStream();
+  }
+
+  create(user: CreateUserPayload) {
+    return this.api.post<User>({ path: API_URL, payload: user });
   }
 
   list() {

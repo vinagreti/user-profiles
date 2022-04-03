@@ -22,8 +22,6 @@ class AuthService {
       id,
       password: this.getToken(password),
     };
-
-    users[id].level = level;
   }
 
   login(
@@ -84,7 +82,6 @@ class AuthService {
     authMetadata: AuthMetadata,
     publicToken: string = this.getRandomToken()
   ) {
-    console.log('user agent', authMetadata.userAgent);
     const agentToken = this.getToken(authMetadata.userAgent);
     const privateToken = `${publicToken}${agentToken}`;
     return {

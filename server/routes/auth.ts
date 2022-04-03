@@ -1,19 +1,18 @@
 import * as express from 'express';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { authService } from './../services/auth';
 
 const userRoutes = express.Router();
 
-userRoutes.get('/current', (req, res) => {
-  const user = authService.current(req);
-  if (user) {
-    res.send(user);
+userRoutes.get('/current', (req: Request, res: Response) => {
+  if (req.user) {
+    res.send(req.user);
   } else {
     res.status(401).send();
   }
 });
 
-userRoutes.post('/login', (req: Request, res) => {
+userRoutes.post('/login', (req: Request, res: Response) => {
   const email = req.body['email'];
   const password = req.body['password'];
   const authMetadata = {
@@ -36,7 +35,7 @@ userRoutes.post('/login', (req: Request, res) => {
   }
 });
 
-userRoutes.get('/logout', (req, res) => {
+userRoutes.get('/logout', (req, res: Response) => {
   if (authService.logout(req)) {
     res.status(201).send();
   } else {

@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User, USER_LEVEL } from '@models/user';
+import { PermissionService } from '@services/permission/permission.service';
 import { UserService } from '@services/user/user.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard-page',
@@ -10,13 +11,18 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserDashboardPageComponent implements OnInit {
+  refreshUser$ = new BehaviorSubject(true);
+
   users$!: Observable<User[]>;
 
   currentUser$!: Observable<User | undefined>;
 
   USER_LEVEL = Object.values(USER_LEVEL);
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private permissionService: PermissionService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.loadUser();
@@ -24,7 +30,24 @@ export class UserDashboardPageComponent implements OnInit {
   }
 
   onLevelChanged(user: User, level: USER_LEVEL) {
-    this.userService.setUserLevel(user, level);
+    this.permissionService.setUserLevel(user, level).subscribe((res) => {
+      console.log('res', res);
+      this.refreshUser$.next(true);
+    });
+  }
+
+  onAddNewUserClicked() {
+    this.userService
+      .create({
+        name: 'name',
+        level: USER_LEVEL.ADMIN,
+        email: 'name@name.com',
+        password: 'name',
+      })
+      .subscribe((res) => {
+        console.log('res', res);
+        this.refreshUser$.next(true);
+      });
   }
 
   private loadUser() {
@@ -32,6 +55,8 @@ export class UserDashboardPageComponent implements OnInit {
   }
 
   private loadUsers() {
-    this.users$ = this.userService.list();
+    this.users$ = this.refreshUser$.pipe(
+      switchMap(() => this.userService.list())
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { USER_LEVEL } from '@models/user';
+import { USER_LEVEL } from './../user';
 
 export type AppPermisisonsMap = { [key in USER_LEVEL]: APP_ACTION[] };
 

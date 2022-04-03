@@ -1,34 +1,42 @@
-<p>user-dashboard-page works!</p>
-
-<div *ngIf="currentUser$ | async as currentUser">
-  <div *ngIf="users$ | async as users" class="flex-column flex-gap-8px">
-    <ng-container *ngFor="let user of users">
-      <div [ngClass]="{ me: user.id === currentUser.id }" class="flex-row">
-        <div class="flex-grow">
-          {{ user.name }}
-        </div>
-        <div class="flex-grow">
-          {{ user.email }}
-        </div>
-        <div>
-          <button *ngIf="user.id === currentUser.id">
-            <select
-              name="user-{{ user.id }}-level-selector"
-              attr.aria-label="user {{ user.id }} level selector"
-              [value]="user.level"
-              (change)="onLevelChanged(user, $any($event.target).value)"
-            >
-              <option
-                *ngFor="let level of USER_LEVEL"
-                [value]="level"
-                [selected]="level === user.level"
+<ng-container *ngIf="currentUser$ | async as currentUser">
+  <ng-container *ngIf="users$ | async as users">
+    <h1>
+      Users
+      <small
+        ><small>({{ users.length }})</small></small
+      >
+      <button (click)="onAddNewUserClicked()">+ New User</button>
+    </h1>
+    <div class="flex-column flex-gap-8px">
+      <ng-container *ngFor="let user of users">
+        <div [ngClass]="{ me: user.id === currentUser.id }" class="flex-row">
+          <div class="flex-grow">
+            {{ user.name }}
+          </div>
+          <div class="flex-grow">
+            {{ user.email }}
+          </div>
+          <div>
+            <button>
+              <select
+                name="user-{{ user.id }}-level-selector"
+                attr.aria-label="user {{ user.id }} level selector"
+                [value]="user.level"
+                [disabled]="user.id === currentUser.id"
+                (change)="onLevelChanged(user, $any($event.target).value)"
               >
-                {{ level }}
-              </option>
-            </select>
-          </button>
+                <option
+                  *ngFor="let level of USER_LEVEL"
+                  [value]="level"
+                  [selected]="level === user.level"
+                >
+                  {{ level }}
+                </option>
+              </select>
+            </button>
+          </div>
         </div>
-      </div>
-    </ng-container>
-  </div>
-</div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>

@@ -29,14 +29,15 @@ export class PassportApiService<CT = any> {
   }
 
   get<T = CT>({ path }: PassportApiServiceOptions) {
-    const headers = new HttpHeaders({ Authorization: this.token! });
+    const headers = this.createHeaders();
     const url = `${environment.apiUrl}${path}`;
     return this.http.get<T>(url, { headers }).pipe(shareReplay());
   }
 
   post<T = CT>({ path, payload }: PassportApiServiceOptions) {
+    const headers = this.createHeaders();
     const url = `${environment.apiUrl}${path}`;
-    return this.http.post<T>(url, payload).pipe(shareReplay());
+    return this.http.post<T>(url, payload, { headers }).pipe(shareReplay());
   }
 
   login(email: string, password: string) {
@@ -63,6 +64,17 @@ export class PassportApiService<CT = any> {
         return of(undefined);
       })
     );
+  }
+
+  private createHeaders(customHeaders: { [key: string]: string } = {}) {
+    return new HttpHeaders({
+      // AUTHORIZATION TOKEN
+      Authorization: this.token!,
+      // CACHE PREFLIGHT REQUESTS
+      AccessControlMaxAge: '7200',
+      // CUSTOM HEADERS
+      ...customHeaders,
+    });
   }
 
   private loadAuthToken() {
