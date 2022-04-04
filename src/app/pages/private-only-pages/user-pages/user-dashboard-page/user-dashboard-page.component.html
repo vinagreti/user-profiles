@@ -18,40 +18,42 @@
         </a>
       </div>
     </div>
-    <div class="flex-column">
-      <ng-container *ngFor="let user of users; trackBy: trackByUser">
-        <div
-          [ngClass]="{ me: user.id === currentUser.id }"
-          class="flex-row row flex-gap-8px flex-align-center click"
-          [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
-        >
-          <div class="flex-grow-equal">
-            <a color="accent">{{ user.name }}</a>
-          </div>
-          <div class="flex-grow-equal">
-            {{ user.email }}
-          </div>
-          <div>
-            <select
-              *ngIf="currentUser.level === USER_LEVEL.ADMIN"
-              name="user-{{ user.id }}-level-selector"
-              attr.aria-label="user {{ user.id }} level selector"
-              [value]="user.level"
-              [disabled]="user.id === currentUser.id"
-              (change)="onLevelChanged(user, $any($event.target).value)"
-              (click)="$event.stopPropagation()"
-            >
-              <option
-                *ngFor="let userLevelOptionValue of USER_LEVELS"
-                [value]="userLevelOptionValue"
-                [selected]="user.level == userLevelOptionValue"
+    <div>
+      <div class="flex-column">
+        <ng-container *ngFor="let user of users; trackBy: trackByUser">
+          <div
+            [ngClass]="{ me: user.id === currentUser.id }"
+            class="flex-row row flex-gap-8px flex-align-center click"
+            [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
+          >
+            <div class="flex-grow-equal">
+              <a color="accent">{{ user.name }}</a>
+            </div>
+            <div class="flex-grow-equal">
+              {{ user.email }}
+            </div>
+            <div>
+              <select
+                *ngIf="currentUser.level === USER_LEVEL.ADMIN"
+                name="user-{{ user.id }}-level-selector"
+                attr.aria-label="user {{ user.id }} level selector"
+                [value]="user.level"
+                [disabled]="user.id === currentUser.id"
+                (change)="onLevelChanged(user, $any($event.target).value)"
+                (click)="$event.stopPropagation()"
               >
-                {{ userLevelOptionValue }}
-              </option>
-            </select>
+                <option
+                  *ngFor="let userLevelOptionValue of USER_LEVELS"
+                  [value]="userLevelOptionValue"
+                  [selected]="user.level == userLevelOptionValue"
+                >
+                  {{ userLevelOptionValue }}
+                </option>
+              </select>
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
   </ng-container>
 </ng-container>

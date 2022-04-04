@@ -3,7 +3,15 @@ import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { AuthResponse } from '@models/auth';
 import { User } from '@models/user';
-import { BehaviorSubject, catchError, of, shareReplay, tap } from 'rxjs';
+import { AlertService } from '@services/alert';
+import {
+  BehaviorSubject,
+  catchError,
+  of,
+  shareReplay,
+  tap,
+  throwError,
+} from 'rxjs';
 import { PassportApiServiceOptions } from './passport-api.service.models';
 
 const AUTH_TOKEN_KEY = '42';
@@ -24,25 +32,45 @@ export class PassportApiService<CT = any> {
 
   token?: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private alertService: AlertService, private http: HttpClient) {
     this.loadAuthToken();
   }
 
-  get<T = CT>({ path, httpHeaders }: PassportApiServiceOptions) {
+  get<T = CT>({
+    path,
+    httpHeaders,
+    errorMessage,
+    successMessage,
+  }: PassportApiServiceOptions) {
     const headers = this.createHeaders(httpHeaders);
     const url = `${environment.apiUrl}${path}`;
-    return this.http.get<T>(url, { headers }).pipe(shareReplay());
+    return this.http.get<T>(url, { headers }).pipe(
+      shareReplay(),
+      catchError((err) => this.handleError(err, errorMessage)),
+      tap(() => this.handleSuccess(successMessage))
+    );
   }
 
-  post<T = CT>({ path, payload, httpHeaders }: PassportApiServiceOptions) {
+  post<T = CT>({
+    path,
+    payload,
+    httpHeaders,
+    errorMessage,
+    successMessage,
+  }: PassportApiServiceOptions) {
     const headers = this.createHeaders(httpHeaders);
     const url = `${environment.apiUrl}${path}`;
-    return this.http.post<T>(url, payload, { headers }).pipe(shareReplay());
+    return this.http.post<T>(url, payload, { headers }).pipe(
+      shareReplay(),
+      catchError((err) => this.handleError(err, errorMessage)),
+      tap(() => this.handleSuccess(successMessage))
+    );
   }
 
   login(email: string, password: string) {
     const path = AUTH_PATHS.login;
-    const payload = { email, password };
+    const errorMessage = 'Error during login';
+    const payload = { email, password, errorMessage };
     return this.post<AuthResponse>({ path, payload }).pipe(
       tap((authData) => this.handleLoginSuccess(authData))
     );
@@ -50,7 +78,10 @@ export class PassportApiService<CT = any> {
 
   logout() {
     const path = AUTH_PATHS.logout;
-    return this.get({ path }).pipe(tap(() => this.persistAuthState(undefined)));
+    const errorMessage = 'Error during login';
+    return this.get({ path, errorMessage }).pipe(
+      tap(() => this.persistAuthState(undefined))
+    );
   }
 
   refreshUser() {
@@ -63,6 +94,25 @@ export class PassportApiService<CT = any> {
         return of(undefined);
       })
     );
+  }
+
+  private handleError(error: any, message?: string) {
+    if (message) {
+      this.alertService.alert({
+        color: 'warn',
+        message: message,
+      });
+    }
+    return throwError(() => error);
+  }
+
+  private handleSuccess(message?: string) {
+    if (message) {
+      this.alertService.alert({
+        color: 'success',
+        message: message,
+      });
+    }
   }
 
   private createHeaders(customHeaders: { [key: string]: string } = {}) {

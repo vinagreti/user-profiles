@@ -17,7 +17,7 @@ export class UserAddPageComponent {
 
   addUser(newUser: NewUser) {
     this.userService.create(newUser).subscribe((user) => {
-      this.router.navigate([APP_ROUTES.privateOnly.user.dashboard, user.id]);
+      this.router.navigate([APP_ROUTES.privateOnly.user.dashboard]);
     });
   }
 }

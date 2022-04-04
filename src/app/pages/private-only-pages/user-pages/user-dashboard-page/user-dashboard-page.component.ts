@@ -50,7 +50,6 @@ export class UserDashboardPageComponent implements OnInit {
         password: 'name',
       })
       .subscribe((res) => {
-        console.log('res', res);
         this.refreshUser$.next(true);
       });
   }
