@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User, USER_LEVEL } from '@models/user';
 import { PermissionService } from '@services/permission';
@@ -9,6 +9,7 @@ import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
   selector: 'app-user-details-page',
   templateUrl: './user-details-page.component.html',
   styleUrls: ['./user-details-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserDetailsPageComponent implements OnInit {
   refreshUser$ = new BehaviorSubject(true);

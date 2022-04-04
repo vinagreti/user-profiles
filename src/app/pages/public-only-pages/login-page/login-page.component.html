@@ -1,4 +1,5 @@
 <form
+  #loginForm="ngForm"
   (submit)="onFormSubmitted(loginData.email, loginData.password)"
   class="flex-column flex-gap-16px login-form"
 >
@@ -24,6 +25,8 @@
     />
   </div>
 
-  <button type="submit" color="primary-contrast">Login</button>
+  <button [disabled]="loginForm.invalid" type="submit" color="primary-contrast">
+    Login
+  </button>
   <div></div>
 </form>

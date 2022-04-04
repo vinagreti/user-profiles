@@ -9,11 +9,6 @@ body {
   box-sizing: border-box;
 }
 
-input[type="checkbox"],
-select {
-  cursor: pointer;
-}
-
 @import "./assets/defaults";
 @import "./assets/colors";
 @import "./assets/flex";

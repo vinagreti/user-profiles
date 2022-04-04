@@ -1,34 +1,28 @@
-<form class="flex-column flex-gap-8px" #userForm="ngForm">
+<form class="user-form flex-column flex-gap-8px" #userForm="ngForm">
   <div>
-    <input
-      [(ngModel)]="newUser.name"
-      type="text"
-      name="name"
-      placeholder="Name"
-      required
-    />
+    <label for="name"> Name </label>
+    <input [(ngModel)]="newUser.name" type="text" name="name" required />
   </div>
 
   <div>
+    <label for="email"> E-mail </label>
     <input
       [(ngModel)]="newUser.email"
       autocomplete="off"
       type="text"
       name="email"
-      placeholder="E-mail"
       required
     />
   </div>
 
   <div>
+    <label for="user-level-selector"> Level </label>
     <select
       name="user-level-selector"
-      placeholder="Level"
       attr.aria-label="user level selector"
       [(ngModel)]="newUser.level"
       required
     >
-      <option value="" disabled>Level</option>
       <option
         *ngFor="let userLevelOptionValue of USER_LEVELS"
         [value]="userLevelOptionValue"
@@ -38,23 +32,26 @@
     </select>
   </div>
 
-  <div class="flex-row flex-align-center">
+  <div>
+    <label for="password"> Password </label>
     <input
       [(ngModel)]="newUser.password"
       [type]="(showPassword$ | async) ? 'text' : 'password'"
       autocomplete="off"
       name="password"
-      placeholder="Password"
       required
     />
-    <div>
-      <small>Show </small>
-      <input
-        (change)="onShowPasswordCheckStatusChanged($event)"
-        type="checkbox"
-        name=""
-        id=""
-      />
-    </div>
+  </div>
+
+  <div class="flex-row flex-align-center flex-gap-8px">
+    <input
+      (change)="onShowPasswordCheckStatusChanged($event)"
+      [(ngModel)]="showPassword"
+      type="checkbox"
+      name="showPassord"
+      class="change-password-checkbox"
+      required
+    />
+    <small><label for="showPassord">Show password</label></small>
   </div>
 </form>

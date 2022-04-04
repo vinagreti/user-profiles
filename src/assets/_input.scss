@@ -2,31 +2,80 @@
   outline: none !important;
 }
 
+input[type="checkbox"],
+select {
+  cursor: pointer;
+}
+
 input,
 textarea,
 select {
   padding: 4px 8px;
-  width: 100%;
   border-radius: var(--default-border-radius);
-  /* remove default behavior */
-  appearance: none;
-  -webkit-appearance: none;
   box-shadow: none;
   border-style: solid;
   border-width: 1px;
+  /* remove default behavior */
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:not([type="checkbox"]) {
+    display: block;
+    width: 100%;
+  }
 
   &.ng-invalid.ng-touched {
-    border-color: rgba(red, 0.67);
-    color: red !important;
+    border-color: var(--app-color-warn);
+    color: var(--app-color-warn);
 
     &::-webkit-input-placeholder,
     &::-webkit-input-placeholder {
-      color: red;
+      color: var(--app-color-warn);
     }
 
     &:-moz-placeholder,
     &:-moz-placeholder {
-      color: red;
+      color: var(--app-color-warn);
+    }
+  }
+}
+
+select:required:invalid.ng-touched,
+input:required:invalid.ng-touched {
+  content: "* Required";
+  font-size: smaller;
+  color: var(--app-color-warn);
+}
+
+input[type="checkbox"] {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+  padding: 0.35em;
+  appearance: none;
+  border: 1px solid var(--app-color-primary);
+  border-radius: var(--default-border-radius);
+  outline: none;
+  transition-duration: 0.3s;
+  background-color: var(--app-color-primary-contrast);
+  cursor: pointer;
+  margin: 0px;
+
+  &:checked {
+    border-color: var(--app-color-succes);
+    background-color: var(--app-color-success);
+  }
+
+  &:active,
+  &:focus {
+    border-color: var(--app-color-success);
+  }
+
+  &:required:invalid.ng-touched {
+    border-color: var(--app-color-warn);
+
+    &:focus {
+      border-color: var(--app-color-success);
     }
   }
 }

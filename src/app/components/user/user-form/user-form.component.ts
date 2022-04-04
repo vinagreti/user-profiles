@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NewUser, USER_LEVEL } from '@models/user';
 import { BehaviorSubject, map, Observable } from 'rxjs';
@@ -7,6 +13,7 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent implements OnInit {
   USER_LEVEL = USER_LEVEL;
@@ -21,6 +28,8 @@ export class UserFormComponent implements OnInit {
 
   @ViewChild(NgForm, { static: true }) userForm!: NgForm;
 
+  showPassword = false;
+
   constructor() {}
 
   ngOnInit() {
@@ -33,6 +42,7 @@ export class UserFormComponent implements OnInit {
 
   onShowPasswordCheckStatusChanged($event: any) {
     const checked = $event.target.checked;
+    this.showPassword = checked;
     this.showPassword$.next(checked);
   }
 }

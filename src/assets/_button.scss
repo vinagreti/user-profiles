@@ -68,7 +68,7 @@ a.button:active {
 
   &:disabled,
   &:disabled:hover {
-    background-color: transparent;
+    background-color: var(--app-color-grey-light);
     color: var(--app-color-grey);
     cursor: initial;
   }

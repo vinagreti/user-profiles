@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NewUser } from '@models/user';
 import { APP_ROUTES } from '@pages/routes';
@@ -8,6 +8,7 @@ import { UserService } from '@services/user';
   selector: 'app-user-add-page',
   templateUrl: './user-add-page.component.html',
   styleUrls: ['./user-add-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserAddPageComponent {
   newUser: NewUser = { level: '' } as any as NewUser;
