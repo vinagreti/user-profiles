@@ -41,19 +41,6 @@ export class UserDashboardPageComponent implements OnInit {
     });
   }
 
-  onAddNewUserClicked() {
-    this.userService
-      .create({
-        name: 'name',
-        level: USER_LEVEL.ADMIN,
-        email: 'name@name.com',
-        password: 'name',
-      })
-      .subscribe((res) => {
-        this.refreshUser$.next(true);
-      });
-  }
-
   trackByUser(index: number, user: User) {
     return user.id;
   }
