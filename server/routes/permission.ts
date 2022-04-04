@@ -8,9 +8,6 @@ const permissionRoutes = express.Router();
 permissionRoutes.post('/userLevel', (req: Request, res: Response) => {
   const userId = req.body['userId'];
   const level = req.body['level'];
-
-  console.log(' permissionRoutes req.user?.level', req.user?.level);
-
   if (req.user?.level === USER_LEVEL.ADMIN) {
     userService.changeLevel(userId, level);
     const user = userService.get(userId);

@@ -1,7 +1,15 @@
 <div class="flex-column">
   <div class="flex-row flex-align-center app-page-wrapper-header">
     <div>
-      <a routerLink="/">User Roles</a>
+      <a
+        class="uppercase"
+        routerLink="/"
+        *ngIf="userService.current$ | async as currentUser"
+      >
+        <small>{{ currentUser.email }}</small>
+        ->
+        <small>{{ currentUser.level }}</small>
+      </a>
     </div>
     <div class="flex-grow"></div>
     <div>
@@ -18,3 +26,25 @@
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="alertService.alert$ | async as alert">
+  <div class="alert" [attr.color]="alert.color">
+    <div *ngIf="alert.title">{{ alert.title }}</div>
+    <div class="flex-row flex-gap-8px flex-align-center">
+      <div
+        *ngIf="alert.message"
+        class="flex-grow"
+        [innerHTML]="alert.message"
+      ></div>
+      <div *ngIf="alert.next" (click)="alert.next()">
+        <button
+          [attr.color]="alert.color"
+          *ngIf="alert.next"
+          (click)="alert.next()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

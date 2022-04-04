@@ -21,7 +21,7 @@
       <ng-container *ngFor="let user of users; trackBy: trackByUser">
         <div
           [ngClass]="{ me: user.id === currentUser.id }"
-          class="flex-row row flex-gap-8px click"
+          class="flex-row row flex-gap-8px flex-align-center click"
           [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
         >
           <div class="flex-grow-equal">
