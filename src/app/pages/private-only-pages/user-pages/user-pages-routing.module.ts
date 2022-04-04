@@ -15,6 +15,7 @@ const routes: Routes = [
       import('./user-add-page/user-add-page.module').then(
         (m) => m.UserAddPageModule
       ),
+    data: { backButton: true },
   },
   {
     path: ':id',
@@ -22,6 +23,7 @@ const routes: Routes = [
       import('./user-details-page/user-details-page.module').then(
         (m) => m.UserDetailsPageModule
       ),
+    data: { backButton: true },
   },
 ];
 

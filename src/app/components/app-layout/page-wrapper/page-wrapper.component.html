@@ -1,10 +1,18 @@
 <div class="flex-column">
-  <div class="flex-row flex-align-center app-page-wrapper-header">
+  <div class="flex-row flex-align-center flex-gap-8px app-page-wrapper-header">
+    <button
+      *ngIf="nav"
+      class="menu-button"
+      (click)="toggleMenu()"
+      color="accent"
+    >
+      &equals;
+    </button>
     <div>
       <a
         class="uppercase"
         routerLink="/"
-        *ngIf="userService.current$ | async as currentUser"
+        *ngIf="userService.current$ | async as currentUser; else titleTemplate"
       >
         <small>{{ currentUser.email }}</small>
         ->
@@ -17,11 +25,12 @@
     </div>
   </div>
   <div class="flex-grow flex-row">
-    <div class="app-page-wrapper-left-menu">
+    <div class="app-page-wrapper-left-menu" *ngIf="showMenu$ | async">
       <ng-content select="nav"></ng-content>
     </div>
 
     <div class="flex-grow app-page-wrapper-content">
+      <a *ngIf="showBackButton$ | async" routerLink="..">< Back</a>
       <ng-content></ng-content>
     </div>
   </div>
@@ -48,3 +57,5 @@
     </div>
   </div>
 </ng-container>
+
+<ng-template #titleTemplate> Passport </ng-template>

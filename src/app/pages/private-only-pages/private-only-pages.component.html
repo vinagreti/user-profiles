@@ -5,6 +5,9 @@
   <nav>
     <a
       [routerLink]="[APP_ROUTES.privateOnly.user.dashboard]"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [ngClass]="rla.isActive ? 'active' : ''"
       color="accent"
       class="button"
       >Users</a

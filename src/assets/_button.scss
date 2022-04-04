@@ -16,7 +16,8 @@ a.button:active {
   &[color="primary"] {
     color: var(--app-color-primary);
     background-color: var(--app-color-primary-contrast);
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--app-color-primary);
       color: var(--app-color-primary-contrast);
     }
@@ -24,7 +25,8 @@ a.button:active {
   &[color="primary-contrast"] {
     color: var(--app-color-primary-contrast);
     background-color: var(--app-color-primary);
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--app-color-primary-contrast);
       color: var(--app-color-primary);
     }
@@ -33,7 +35,8 @@ a.button:active {
   &[color="accent"] {
     color: var(--app-color-accent);
     background-color: var(--app-color-accent-contrast);
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--app-color-accent);
       color: var(--app-color-accent-contrast);
     }
@@ -42,7 +45,8 @@ a.button:active {
   &[color="accent-contrast"] {
     color: var(--app-color-accent-contrast);
     background-color: var(--app-color-accent);
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--app-color-accent-contrast);
       color: var(--app-color-accent);
     }
@@ -51,7 +55,8 @@ a.button:active {
   &[color="warn"] {
     color: var(--app-color-warn);
     background-color: var(--app-color-warn-contrast);
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--app-color-warn);
       color: var(--app-color-warn-contrast);
     }
@@ -60,7 +65,8 @@ a.button:active {
   &[color="warn-contrast"] {
     color: var(--app-color-warn-contrast);
     background-color: var(--app-color-warn);
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--app-color-warn-contrast);
       color: var(--app-color-warn);
     }

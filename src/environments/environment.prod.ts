@@ -1,5 +1,5 @@
 import { environment as env } from './environment';
 export const environment: typeof env = {
   production: true,
-  apiUrl: '//localhost:3000',
+  apiUrl: '//192.168.1.110:3000',
 };
