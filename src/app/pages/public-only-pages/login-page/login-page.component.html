@@ -10,6 +10,7 @@
       name="email"
       placeholder="email"
       [(ngModel)]="loginData.email"
+      required
     />
   </div>
 
@@ -19,10 +20,10 @@
       name="password"
       placeholder="password"
       [(ngModel)]="loginData.password"
+      required
     />
   </div>
 
-  <div>
-    <button type="submit" color="primary">login</button>
-  </div>
+  <button type="submit" color="primary-contrast">Login</button>
+  <div></div>
 </form>

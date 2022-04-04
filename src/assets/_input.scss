@@ -1,0 +1,32 @@
+*:focus {
+  outline: none !important;
+}
+
+input,
+textarea,
+select {
+  padding: 4px 8px;
+  width: 100%;
+  border-radius: var(--default-border-radius);
+  /* remove default behavior */
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  border-style: solid;
+  border-width: 1px;
+
+  &.ng-invalid.ng-touched {
+    border-color: rgba(red, 0.67);
+    color: red !important;
+
+    &::-webkit-input-placeholder,
+    &::-webkit-input-placeholder {
+      color: red;
+    }
+
+    &:-moz-placeholder,
+    &:-moz-placeholder {
+      color: red;
+    }
+  }
+}

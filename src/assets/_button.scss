@@ -2,8 +2,12 @@ button,
 a.button,
 a.button:visited,
 a.button:active {
+  /* remove default behavior */
+  appearance: none;
+  -webkit-appearance: none;
+
   border: none;
-  border-radius: 4px;
+  border-radius: var(--default-border-radius);
   background-color: transparent;
   color: inherit;
   cursor: pointer;
@@ -17,6 +21,15 @@ a.button:active {
       color: var(--app-color-primary-contrast);
     }
   }
+  &[color="primary-contrast"] {
+    color: var(--app-color-primary-contrast);
+    background-color: var(--app-color-primary);
+    &:hover {
+      background-color: var(--app-color-primary-contrast);
+      color: var(--app-color-primary);
+    }
+  }
+
   &[color="accent"] {
     color: var(--app-color-accent);
     background-color: var(--app-color-accent-contrast);
@@ -25,12 +38,31 @@ a.button:active {
       color: var(--app-color-accent-contrast);
     }
   }
+
+  &[color="accent-contrast"] {
+    color: var(--app-color-accent-contrast);
+    background-color: var(--app-color-accent);
+    &:hover {
+      background-color: var(--app-color-accent-contrast);
+      color: var(--app-color-accent);
+    }
+  }
+
   &[color="warn"] {
     color: var(--app-color-warn);
     background-color: var(--app-color-warn-contrast);
     &:hover {
       background-color: var(--app-color-warn);
       color: var(--app-color-warn-contrast);
+    }
+  }
+
+  &[color="warn-contrast"] {
+    color: var(--app-color-warn-contrast);
+    background-color: var(--app-color-warn);
+    &:hover {
+      background-color: var(--app-color-warn-contrast);
+      color: var(--app-color-warn);
     }
   }
 
