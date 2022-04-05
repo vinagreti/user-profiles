@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
+import { API_CODES, API_CODE_MESSAGES } from '@models/api-codes';
 import { AuthResponse } from '@models/auth';
-import { API_CODES, API_CODE_MESSAGES } from '@models/error';
 import { User } from '@models/user';
 import { AlertColor, AlertConfig, AlertService } from '@services/alert';
 import {
@@ -42,15 +42,23 @@ export class PassportApiService<CT = any> {
     path,
     httpHeaders,
     errorMessage,
+    errorTitle,
     successMessage,
+    successTitle,
   }: PassportApiServiceOptions) {
     const headers = this.createHeaders(httpHeaders);
     const url = `${environment.apiUrl}${path}`;
     return this.http.get<T>(url, { headers }).pipe(
       shareReplay(),
-      catchError((err) => this.handleError(err, errorMessage)),
+      catchError((err) => this.handleError(err, errorMessage, errorTitle)),
       switchMap((response) =>
-        this.handleSuccess({ response, successMessage, errorMessage })
+        this.handleSuccess({
+          response,
+          successMessage,
+          successTitle,
+          errorMessage,
+          errorTitle,
+        })
       )
     );
   }
@@ -60,15 +68,23 @@ export class PassportApiService<CT = any> {
     payload,
     httpHeaders,
     errorMessage,
+    errorTitle,
     successMessage,
+    successTitle,
   }: PassportApiServiceOptions) {
     const headers = this.createHeaders(httpHeaders);
     const url = `${environment.apiUrl}${path}`;
     return this.http.post<T>(url, payload, { headers }).pipe(
       shareReplay(),
-      catchError((err) => this.handleError(err, errorMessage)),
+      catchError((err) => this.handleError(err, errorMessage, errorTitle)),
       switchMap((response) =>
-        this.handleSuccess({ response, successMessage, errorMessage })
+        this.handleSuccess({
+          response,
+          successMessage,
+          successTitle,
+          errorMessage,
+          errorTitle,
+        })
       )
     );
   }
@@ -115,17 +131,21 @@ export class PassportApiService<CT = any> {
 
   private handleSuccess({
     response,
-    successMessage,
+    errorTitle,
     errorMessage,
+    successTitle,
+    successMessage,
   }: {
     response: any;
-    successMessage?: string;
     errorMessage?: string;
+    errorTitle?: string;
+    successMessage?: string;
+    successTitle?: string;
   }) {
-    if (response.error) {
-      return this.handleError(response, errorMessage);
+    if (response?.error) {
+      return this.handleError(response, errorMessage, errorTitle);
     } else {
-      this.showMessage('success', successMessage);
+      this.showMessage('success', successMessage, successTitle);
       return of(response);
     }
   }

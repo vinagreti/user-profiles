@@ -4,16 +4,12 @@ import {
   ContentChild,
   OnDestroy,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  NavigationEnd,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NavDirective } from '@components/nav/nav.directive';
 import { AlertService } from '@services/alert/alert.service';
 import { UserService } from '@services/user';
 import { BehaviorSubject, filter, map, Subscription } from 'rxjs';
+import { getRouteChildrenData } from 'src/app/helpers/router';
 
 const maxMobileWidth = 799;
 const minDesktopWidth = maxMobileWidth + 1;
@@ -63,7 +59,7 @@ export class PageWrapperComponent implements OnDestroy {
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         map((event) => {
-          const routeData = this.getChildrenData(this.route.snapshot);
+          const routeData = getRouteChildrenData(this.route.snapshot);
           return routeData.backButton;
         })
       )
@@ -83,15 +79,6 @@ export class PageWrapperComponent implements OnDestroy {
       });
     this.subscriptions.add(subscription);
   };
-
-  private getChildrenData(snapshot: ActivatedRouteSnapshot): any {
-    let data = { ...snapshot?.firstChild?.data };
-    if (snapshot?.firstChild?.firstChild) {
-      return { ...data, ...this.getChildrenData(snapshot?.firstChild) };
-    } else {
-      return data;
-    }
-  }
 
   private hideMenu() {
     this.showMenu$.next(false);

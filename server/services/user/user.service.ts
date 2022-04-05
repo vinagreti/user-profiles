@@ -3,16 +3,15 @@ import { NextFunction, Request, Response } from 'express';
 import {
   API_CODES,
   API_CODE_MESSAGES,
-} from './../../../universal/models/error/error.models';
-import { User, USER_LEVEL } from './../../../universal/models/user';
+} from './../../../universal/models/api-codes';
+import { APP_PERMISSIONS } from './../../../universal/models/permission/permission.models';
+import { USER_LEVEL } from './../../../universal/models/user';
 import { API_DB } from './../../db';
 import { authService } from './../../services/auth';
 
 const usersDb = API_DB.users;
 
 class UserService {
-  user?: User;
-
   get(userId: string) {
     return usersDb[userId];
   }
@@ -59,5 +58,6 @@ export const identifyUserMiddleware = (
 ) => {
   const user = authService.current(req);
   req.user = user;
+  req.userPermissions = user ? APP_PERMISSIONS[user.level] : [];
   next();
 };

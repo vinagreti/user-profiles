@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { APP_ACTION, APP_PERMISSIONS } from '@models/permission';
 import { User, USER_LEVEL } from '@models/user';
 import { APP_ROUTES } from '@pages/routes';
 import { PermissionService } from '@services/permission';
 import { UserService } from '@services/user/user.service';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard-page',
@@ -18,11 +19,15 @@ export class UserDashboardPageComponent implements OnInit {
 
   currentUser$!: Observable<User | undefined>;
 
+  currentUserPermisisons$!: Observable<Array<APP_ACTION>>;
+
   APP_ROUTES = APP_ROUTES;
 
   USER_LEVEL = USER_LEVEL;
 
   USER_LEVELS = Object.values(USER_LEVEL);
+
+  APP_ACTION = APP_ACTION;
 
   constructor(
     private permissionService: PermissionService,
@@ -30,7 +35,8 @@ export class UserDashboardPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadUser();
+    this.loadCurrentUser();
+    this.loadCurrentUserPermisisons();
     this.loadUsers();
   }
 
@@ -45,8 +51,14 @@ export class UserDashboardPageComponent implements OnInit {
     return user.id;
   }
 
-  private loadUser() {
+  private loadCurrentUser() {
     this.currentUser$ = this.userService.current$;
+  }
+
+  private loadCurrentUserPermisisons() {
+    this.currentUserPermisisons$ = this.currentUser$.pipe(
+      map((user) => (user?.level ? APP_PERMISSIONS[user?.level] : []))
+    );
   }
 
   private loadUsers() {

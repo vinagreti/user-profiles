@@ -72,6 +72,66 @@ a.button:active {
     }
   }
 
+  &[color="grey"] {
+    color: var(--app-color-grey);
+    background-color: var(--app-color-grey-contrast);
+    &:hover,
+    &.active {
+      background-color: var(--app-color-grey);
+      color: var(--app-color-grey-contrast);
+    }
+  }
+
+  &[color="grey-contrast"] {
+    color: var(--app-color-grey-contrast);
+    background-color: var(--app-color-grey);
+    &:hover,
+    &.active {
+      background-color: var(--app-color-grey-contrast);
+      color: var(--app-color-grey);
+    }
+  }
+
+  &[color="grey-light"] {
+    color: var(--app-color-grey-light);
+    background-color: var(--app-color-grey-light-contrast);
+    &:hover,
+    &.active {
+      background-color: var(--app-color-grey-light);
+      color: var(--app-color-grey-light-contrast);
+    }
+  }
+
+  &[color="grey-light-contrast"] {
+    color: var(--app-color-grey-light-contrast);
+    background-color: var(--app-color-grey-light);
+    &:hover,
+    &.active {
+      background-color: var(--app-color-grey-light-contrast);
+      color: var(--app-color-grey-light);
+    }
+  }
+
+  &[color="success"] {
+    color: var(--app-color-success);
+    background-color: var(--app-color-success-contrast);
+    &:hover,
+    &.active {
+      background-color: var(--app-color-success);
+      color: var(--app-color-success-contrast);
+    }
+  }
+
+  &[color="success-contrast"] {
+    color: var(--app-color-success-contrast);
+    background-color: var(--app-color-success);
+    &:hover,
+    &.active {
+      background-color: var(--app-color-success-contrast);
+      color: var(--app-color-success);
+    }
+  }
+
   &:disabled,
   &:disabled:hover {
     background-color: var(--app-color-grey-light);

@@ -1,58 +1,62 @@
-<ng-container *ngIf="currentUser$ | async as currentUser">
-  <ng-container *ngIf="users$ | async as users">
-    <div class="flex-row flex-space-between flex-align-center">
-      <h1>
-        Users
-        <small
-          ><small>({{ users.length }})</small></small
-        >
-      </h1>
-      <div>
-        <a
-          [routerLink]="[APP_ROUTES.privateOnly.user.new]"
-          class="button"
-          color="primary"
-        >
-          + New User
-        </a>
-      </div>
-    </div>
-    <div>
-      <div class="flex-column">
-        <ng-container *ngFor="let user of users; trackBy: trackByUser">
-          <div
-            [ngClass]="{ me: user.id === currentUser.id }"
-            class="row flex-row flex-wrap flex-gap-8px flex-align-center click"
-            [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
+<ng-container *ngIf="currentUserPermisisons$ | async as currentUserPermisisons">
+  <ng-container *ngIf="currentUser$ | async as currentUser">
+    <ng-container *ngIf="users$ | async as users">
+      <div class="flex-row flex-space-between flex-align-center">
+        <h1>
+          Users
+          <small
+            ><small>({{ users.length }})</small></small
           >
-            <div class="flex-grow-equal">
-              <a color="accent">{{ user.name }}</a>
-            </div>
-            <div class="flex-grow-equal">
-              {{ user.email }}
-            </div>
-            <div>
-              <select
-                *ngIf="currentUser.level === USER_LEVEL.ADMIN"
-                name="user-{{ user.id }}-level-selector"
-                attr.aria-label="user {{ user.id }} level selector"
-                [value]="user.level"
-                [disabled]="user.id === currentUser.id"
-                (change)="onLevelChanged(user, $any($event.target).value)"
-                (click)="$event.stopPropagation()"
-              >
-                <option
-                  *ngFor="let userLevelOptionValue of USER_LEVELS"
-                  [value]="userLevelOptionValue"
-                  [selected]="user.level == userLevelOptionValue"
-                >
-                  {{ userLevelOptionValue }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </ng-container>
+        </h1>
+        <div *ngIf="currentUserPermisisons.includes(APP_ACTION.CREATE_USER)">
+          <a
+            [routerLink]="[APP_ROUTES.privateOnly.user.new]"
+            class="button"
+            color="primary"
+          >
+            + New User
+          </a>
+        </div>
       </div>
-    </div>
+      <div>
+        <div class="flex-column">
+          <ng-container *ngFor="let user of users; trackBy: trackByUser">
+            <div
+              [ngClass]="{ me: user.id === currentUser.id }"
+              class="row flex-row flex-wrap flex-gap-8px flex-align-center click"
+              [routerLink]="[APP_ROUTES.privateOnly.user.dashboard, user.id]"
+            >
+              <div class="flex-grow-equal">
+                <a color="accent">{{ user.name }}</a>
+              </div>
+              <div class="flex-grow-equal">
+                {{ user.email }}
+              </div>
+              <div>
+                <select
+                  name="user-{{ user.id }}-level-selector"
+                  attr.aria-label="user {{ user.id }} level selector"
+                  [value]="user.level"
+                  [disabled]="
+                    user.id === currentUser.id ||
+                    !currentUserPermisisons.includes(APP_ACTION.UPDATE_USER)
+                  "
+                  (change)="onLevelChanged(user, $any($event.target).value)"
+                  (click)="$event.stopPropagation()"
+                >
+                  <option
+                    *ngFor="let userLevelOptionValue of USER_LEVELS"
+                    [value]="userLevelOptionValue"
+                    [selected]="user.level == userLevelOptionValue"
+                  >
+                    {{ userLevelOptionValue }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
   </ng-container>
 </ng-container>

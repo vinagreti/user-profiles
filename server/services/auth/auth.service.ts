@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { AuthMetadata, AuthResponse } from './../../../universal/models/auth';
-import { User, USER_LEVEL } from './../../../universal/models/user';
+import { USER_LEVEL } from './../../../universal/models/user';
 import { API_DB } from './../../db';
 
 const crypto = require('crypto');
@@ -10,8 +10,6 @@ const auth = API_DB.auth;
 const users = API_DB.users;
 
 class AuthService {
-  user?: User;
-
   current(req: Request) {
     const authUser = authService.getAuthUserByToken(req);
     return authUser ? users[authUser.id] : undefined;

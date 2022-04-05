@@ -8,21 +8,31 @@
   </div>
   <div class="flex-row flex-gap-4px flex-align-center">
     <label for="level">Level: </label>
-    <select
-      *ngIf="currentUser?.level === USER_LEVEL.ADMIN"
-      name="user-{{ user.id }}-level-selector"
-      attr.aria-label="user {{ user.id }} level selector"
-      [value]="user.level"
-      [disabled]="user.id === currentUser?.id"
-      (change)="onLevelChanged($any($event.target).value)"
+
+    <ng-container
+      [ngSwitch]="
+        (currentUserPermisisons$ | async)?.includes(APP_ACTION.UPDATE_USER)
+      "
     >
-      <option
-        *ngFor="let userLevelOptionValue of USER_LEVELS"
-        [value]="userLevelOptionValue"
-        [selected]="user.level == userLevelOptionValue"
+      <div *ngSwitchCase="false">
+        {{ user.level }}
+      </div>
+      <select
+        *ngSwitchCase="true"
+        name="user-{{ user.id }}-level-selector"
+        attr.aria-label="user {{ user.id }} level selector"
+        [value]="user.level"
+        [disabled]="user.id === (currentUser$ | async)?.id"
+        (change)="onLevelChanged($any($event.target).value)"
       >
-        {{ userLevelOptionValue }}
-      </option>
-    </select>
+        <option
+          *ngFor="let userLevelOptionValue of USER_LEVELS"
+          [value]="userLevelOptionValue"
+          [selected]="user.level == userLevelOptionValue"
+        >
+          {{ userLevelOptionValue }}
+        </option>
+      </select>
+    </ng-container>
   </div>
 </div>
