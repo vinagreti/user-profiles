@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { PageWrapperComponent } from './page-wrapper.component';
+import { PageWrapperTestingModule } from './page-wrapper.testing.module';
 
 describe('PageWrapperComponent', () => {
   let component: PageWrapperComponent;
@@ -8,9 +9,8 @@ describe('PageWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageWrapperComponent ]
-    })
-    .compileComponents();
+      imports: [PageWrapperTestingModule, RouterTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

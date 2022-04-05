@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { PermissionServiceTestingModule } from '@services/permission';
+import { UserServiceTestingModule } from '@services/user';
 import { UserDashboardPageComponent } from './user-dashboard-page.component';
+import { UserDashboardPageModule } from './user-dashboard-page.module';
 
 describe('UserDashboardPageComponent', () => {
   let component: UserDashboardPageComponent;
@@ -8,9 +10,12 @@ describe('UserDashboardPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserDashboardPageComponent ]
-    })
-    .compileComponents();
+      imports: [
+        UserDashboardPageModule,
+        UserServiceTestingModule,
+        PermissionServiceTestingModule,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

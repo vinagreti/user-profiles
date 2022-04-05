@@ -14,6 +14,10 @@ Run `npm run api` to run the api app locally
 
 Run `npm run mono` to run the api and frontend apps locally
 
+## Testing frontend app
+
+Run `npm run test` to run the frontend app test
+
 ## Default admin user
 
 user: admin
