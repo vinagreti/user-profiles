@@ -2,13 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { AuthResponse } from '@models/auth';
+import { API_CODES, API_CODE_MESSAGES } from '@models/error';
 import { User } from '@models/user';
-import { AlertService } from '@services/alert';
+import { AlertColor, AlertConfig, AlertService } from '@services/alert';
 import {
   BehaviorSubject,
   catchError,
   of,
   shareReplay,
+  switchMap,
   tap,
   throwError,
 } from 'rxjs';
@@ -47,7 +49,9 @@ export class PassportApiService<CT = any> {
     return this.http.get<T>(url, { headers }).pipe(
       shareReplay(),
       catchError((err) => this.handleError(err, errorMessage)),
-      tap(() => this.handleSuccess(successMessage))
+      switchMap((response) =>
+        this.handleSuccess({ response, successMessage, errorMessage })
+      )
     );
   }
 
@@ -63,7 +67,9 @@ export class PassportApiService<CT = any> {
     return this.http.post<T>(url, payload, { headers }).pipe(
       shareReplay(),
       catchError((err) => this.handleError(err, errorMessage)),
-      tap(() => this.handleSuccess(successMessage))
+      switchMap((response) =>
+        this.handleSuccess({ response, successMessage, errorMessage })
+      )
     );
   }
 
@@ -96,23 +102,47 @@ export class PassportApiService<CT = any> {
     );
   }
 
-  private handleError(error: any, message?: string) {
+  private showMessage(color: AlertColor, message?: string, title?: string) {
     if (message) {
-      this.alertService.alert({
-        color: 'warn',
-        message: message,
-      });
+      const alertConfig: AlertConfig = {
+        color,
+        message,
+        title,
+      };
+      this.alertService.alert(alertConfig);
     }
-    return throwError(() => error);
   }
 
-  private handleSuccess(message?: string) {
-    if (message) {
-      this.alertService.alert({
-        color: 'success',
-        message: message,
-      });
+  private handleSuccess({
+    response,
+    successMessage,
+    errorMessage,
+  }: {
+    response: any;
+    successMessage?: string;
+    errorMessage?: string;
+  }) {
+    if (response.error) {
+      return this.handleError(response, errorMessage);
+    } else {
+      this.showMessage('success', successMessage);
+      return of(response);
     }
+  }
+
+  private handleError(errorResponse: any, message?: string, title?: string) {
+    if (message) {
+      this.showMessage('warn', message, title);
+    } else if (errorResponse?.code) {
+      const error: API_CODES = errorResponse.code;
+      const errorMessage = API_CODE_MESSAGES[error];
+      if (errorMessage) {
+        this.showMessage('warn', errorMessage, title);
+      } else {
+        this.showMessage('warn', JSON.stringify(message ?? ''), title);
+      }
+    }
+    return throwError(() => errorResponse);
   }
 
   private createHeaders(customHeaders: { [key: string]: string } = {}) {

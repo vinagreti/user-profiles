@@ -20,19 +20,19 @@ export class UserService {
   }
 
   create(user: CreateUserPayload) {
-    const errorMessage = `Problems creating User`;
-    return this.api.post<User>({ path: API_URL, payload: user, errorMessage });
+    const errorTitle = `Problems creating User`;
+    return this.api.post<User>({ path: API_URL, payload: user, errorTitle });
   }
 
   list() {
-    const errorMessage = `Problems loading Users`;
-    return this.api.get<User[]>({ path: API_URL, errorMessage });
+    const errorTitle = `Problems loading Users`;
+    return this.api.get<User[]>({ path: API_URL, errorTitle });
   }
 
   get(userId: string) {
-    const errorMessage = `Problems loading User`;
+    const errorTitle = `Problems loading User`;
     const path = `${API_URL}/${userId}`;
-    return this.api.get<User>({ path, errorMessage });
+    return this.api.get<User>({ path, errorTitle });
   }
 
   private connectToCurrentUserStream() {

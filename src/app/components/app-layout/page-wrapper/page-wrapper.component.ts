@@ -77,8 +77,6 @@ export class PageWrapperComponent implements OnDestroy {
     const subscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        console.log('aqi', this.mobile);
-
         if (this.mobile) {
           this.hideMenu();
         }
