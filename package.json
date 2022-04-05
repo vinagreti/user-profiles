@@ -12,9 +12,9 @@
     "cp:www": "mkdir -p ./dist/api/bin && cp ./server/bin/www ./dist/api/bin/",
     "api:build:watch": "tsc -p ./server/tsconfig.api.json --watch",
     "api:run:watch": "nodemon -q ./dist/api/bin/www --watch",
-    "api:watch": "concurrently -k \"npm run api:build:watch\" \"npm run api:run:watch\"",
+    "api": "concurrently -k \"npm run api:build:watch\" \"npm run cp:www && npm run api:run:watch\"",
     "front": "npm run start",
-    "mono": "concurrently -k  \"npm run front\" \"npm run cp:www && npm run api:watch\""
+    "mono": "concurrently -k  \"npm run front\" \"npm run cp:www && npm run api\""
   },
   "private": true,
   "dependencies": {
